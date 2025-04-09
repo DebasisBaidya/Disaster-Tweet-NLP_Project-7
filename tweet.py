@@ -15,6 +15,7 @@ import time
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
+nltk.download('punkt_tab')
 
 # Load model and vectorizer
 with open("vectorizer.pkl", "rb") as f:
@@ -90,7 +91,7 @@ st.markdown("<div style='text-align:center;'><label style='font-size:16px;font-w
 tweet = st.text_area("", value=st.session_state["tweet_input"], height=100, label_visibility="collapsed", key="tweet_input")
 
 # Center aligned buttons
-btn1, btn2, btn3 = st.columns([1, 2, 1])
+btn1, btn2, btn3 = st.columns([2, 3, 2])
 with btn2:
     predict_clicked = st.button("🔍 Predict Tweet", use_container_width=True)
     reset_clicked = st.button("🧹 Clear Input", use_container_width=True)
