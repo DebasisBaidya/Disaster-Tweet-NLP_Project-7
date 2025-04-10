@@ -18,6 +18,7 @@ import pandas as pd
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
+nltk.download('punkt_tab')
 
 # Load vectorizer and model
 with open("vectorizer.pkl", "rb") as f:
