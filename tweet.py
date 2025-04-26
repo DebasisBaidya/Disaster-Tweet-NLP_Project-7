@@ -116,11 +116,9 @@ with col_center:
     clear_clicked = col2.button("🧹 Reset All", use_container_width=True)
 
 if clear_clicked:
-    st.session_state.tweet_input = ""  # Clears session state input
-    tweet_input = ""  # Clears the text area input box immediately
+    st.session_state.tweet_input = ""
+    st.experimental_rerun()
   
-
-
 if predict_clicked:
     if not tweet_input.strip():
         st.warning("⚠️ Please enter a tweet to analyze.")
@@ -151,12 +149,12 @@ if predict_clicked:
             <div style='margin-top: 10px; font-style: italic; color: gray;'>{mood}</div>
         </div>
         """, unsafe_allow_html=True)
-
-# Celebrate with balloons!
-st.balloons()
        
         # Side-by-side output boxes
         col1, col2 = st.columns(2)
+
+# Celebrate with balloons!
+st.balloons()
 
         # Confidence Breakdown
         with col1:
