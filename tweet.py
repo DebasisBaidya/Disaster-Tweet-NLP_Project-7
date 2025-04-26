@@ -182,7 +182,7 @@ if predict_clicked:
             st.markdown(f"""
                 <div style='padding: 12px;'>
                     <ul style='font-size:16px;'>
-                        <li><b>🧠 Sentiment Score:</b> {sentiment_score * 100:.2f}%</li>
+                        <li><b>🧠 Sentiment Score:</b> {sentiment_score:.3f}</li>
                         <li><b>📝 Tweet Length:</b> {len(clean_text)} characters</li>
                         <li><b>#️⃣ Hashtags Count:</b> {tweet_input.count("#")}</li>
                         <li><b>👥 Mentions Present:</b> {int('@' in tweet_input)}</li>
