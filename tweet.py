@@ -88,7 +88,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("""
 <div style='border: 1px solid #ddd; border-radius: 10px; padding: 15px; text-align:center;'>
     <h4>📋 Try an example</h4>
-    <p style='font-size:14px;'>Click any button below to auto-feed the example in the input box.</p>
+    <p style='font-size:14px;'>Click any button below to auto-fill the example in the input box.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -145,7 +145,7 @@ if predict_clicked:
         <div style='text-align:center; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 10px auto; max-width: 600px;'>
             <h2 style='color:#0099ff;'>📢 Prediction Result</h2>
             <div style='font-size:20px; color:{"red" if prediction == 1 else "green"};'>
-                {"🚨 <b>Disaster</b>" if prediction == 1 else "✅ <b>Non-Disaster</b>"} <span style='font-size:16px;'>(Confidence: {confidence:.2%})</span>
+                {"🚨 <b>Disaster</b>" if prediction == 1 else "✅ <b>Non-Disaster</b>"} <span style='font-size:16px;'>(Confidence Score: {confidence:.2%})</span>
             </div>
             <div style='margin-top: 5px;'>{'🛑 Emergency or disaster related content.' if prediction == 1 else '☑️ Likely personal or casual tweet.'}</div>
             <div style='margin-top: 10px; font-style: italic; color: gray;'>{mood}</div>
@@ -182,7 +182,7 @@ if predict_clicked:
             st.markdown(f"""
                 <div style='padding: 12px;'>
                     <ul style='font-size:16px;'>
-                        <li><b>🧠 Sentiment Score:</b> {sentiment_score:.3f}</li>
+                        <li><b>🧠 Sentiment Score:</b> {sentiment_score * 100:.2f}%</li>
                         <li><b>📝 Tweet Length:</b> {len(clean_text)} characters</li>
                         <li><b>#️⃣ Hashtags Count:</b> {tweet_input.count("#")}</li>
                         <li><b>👥 Mentions Present:</b> {int('@' in tweet_input)}</li>
