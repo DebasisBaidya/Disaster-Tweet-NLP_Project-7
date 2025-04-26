@@ -116,8 +116,8 @@ with col_center:
     clear_clicked = col2.button("🧹 Reset All", use_container_width=True)
 
 if clear_clicked:
-    st.session_state.tweet_input = ""
-    st.experimental_rerun()
+    st.session_state.tweet_input = ""  # Clears session state input
+    tweet_input = ""  # Clears the text area input box immediately
   
 if predict_clicked:
     if not tweet_input.strip():
