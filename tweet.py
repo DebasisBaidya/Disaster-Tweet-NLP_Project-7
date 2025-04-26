@@ -153,8 +153,8 @@ if predict_clicked:
         # Side-by-side output boxes
         col1, col2 = st.columns(2)
 
-    # Celebrate with balloons!
-    st.balloons()
+        # Celebrate with balloons!
+        st.balloons()
 
         # Confidence Breakdown
         with col1:
