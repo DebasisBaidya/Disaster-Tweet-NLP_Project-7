@@ -151,6 +151,9 @@ if predict_clicked:
             <div style='margin-top: 10px; font-style: italic; color: gray;'>{mood}</div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Celebrate with balloons!
+        st.balloons()
         
         # Side-by-side output boxes
         col1, col2 = st.columns(2)
