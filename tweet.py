@@ -216,5 +216,5 @@ if predict_clicked:
         </div>
         """, unsafe_allow_html=True)
 
-        # Celebrate with balloons!
-        st.balloons()
+# Celebrate with balloons!
+st.balloons()
