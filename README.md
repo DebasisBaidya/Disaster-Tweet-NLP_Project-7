@@ -74,7 +74,7 @@ The model will predict:
 
 ![App Screenshot](app_screenshot.png)
 
-> Add a screenshot named `app_screenshot.png` in the repo root.
+> Screenshot of Hosted Streamlit Dashboard.
 
 ---
 
