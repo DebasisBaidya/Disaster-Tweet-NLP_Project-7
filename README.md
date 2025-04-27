@@ -80,9 +80,9 @@ The model will predict:
 
 ## 📁 Project Files
 
-- `Project 7.ipynb`: The main notebook with code and models
+- `Disaster Tweet Classifier.ipynb`: The main notebook with code and models
 - `tweet.py`: Streamlit app logic
-- `requirements.txt`: List of packages used
+- `requirements.txt`: List of packages used for Streamlit
 - `vectorizer.pkl` & `Logistic_Regression.pkl`: Model + vectorizer files
 
 ---
