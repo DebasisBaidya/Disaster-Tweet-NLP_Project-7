@@ -114,11 +114,15 @@ with col_center:
     col1, col2 = st.columns(2)
     predict_clicked = col1.button("🔍 Predict", use_container_width=True)
     clear_clicked = col2.button("🧹 Reset All", use_container_width=True)
-    
+
+# Initialize input_key in session_state if not present
+if "input_key" not in st.session_state:
+    st.session_state["input_key"] = 0
+
 # Reset logic: clear input and increment input_key to reset widget state
 if clear_clicked:
     st.session_state["tweet_input"] = ""
-    st.session_state["tweet_input"] += 1
+    st.session_state["input_key"] += 1
   
 if predict_clicked:
     if not tweet_input.strip():
