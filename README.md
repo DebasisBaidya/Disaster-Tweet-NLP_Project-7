@@ -1,4 +1,4 @@
-# 🌍 Disaster Tweet Classification (NLP Project)
+![image](https://github.com/user-attachments/assets/139066c9-be1a-43f7-a94c-33f5f485beaa)# 🌍 Disaster Tweet Classification (NLP Project)
 
 [![Streamlit App](https://img.shields.io/badge/Live%20App-Streamlit-brightgreen?logo=streamlit)](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
@@ -7,6 +7,7 @@
 This project is about classifying tweets to check whether they are related to a real disaster or not using NLP techniques. It covers everything from text cleaning, feature extraction, model building, and finally deployment.
 
 🚀 **Live App**: [https://disaster-tweet-nlp-debasis-baidya.streamlit.app](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
+📺 **All About My App**: [https://youtu.be/VebH__P0o5s](https://youtu.be/VebH__P0o5s)
 
 ---
 
