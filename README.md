@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/139066c9-be1a-43f7-a94c-33f5f485beaa)# 🌍 Disaster Tweet Classification (NLP Project)
+# 🌍 Disaster Tweet Classification (NLP Project)
 
 [![Streamlit App](https://img.shields.io/badge/Live%20App-Streamlit-brightgreen?logo=streamlit)](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
