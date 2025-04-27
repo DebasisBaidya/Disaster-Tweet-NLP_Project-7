@@ -14,13 +14,13 @@ import matplotlib.pyplot as plt
 import time
 import pandas as pd
 
-# Download NLTK data
+# Download NLTK data for preprocessing
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
 nltk.download('punkt_tab')
 
-# Load vectorizer and model
+# Load TF-IDF vectorizer and Logistic Regression model
 with open("vectorizer.pkl", "rb") as f:
     vectorizer = pickle.load(f)
 
@@ -30,7 +30,7 @@ model = joblib.load("Logistic_Regression.pkl")
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
 
-# Helper functions
+# Function to expand contractions for better preprocessing
 def decontracted(phrase):
     phrase = re.sub(r"won't", "will not", phrase)
     phrase = re.sub(r"can't", "can not", phrase)
@@ -43,38 +43,43 @@ def decontracted(phrase):
     phrase = re.sub(r"'d", " would", phrase)
     return phrase
 
+# Full text cleaning pipeline
 def preprocess_tweet(text):
-    text = decontracted(text)
-    text = re.sub(r"\S*\d\S*", "", text).strip()
-    text = re.sub(r"[^A-Za-z]+", " ", text)
-    text = text.replace("#", "").replace("_", " ")
-    tokens = word_tokenize(text)
-    tokens = [lemmatizer.lemmatize(word.lower()) for word in tokens if word.lower() not in stop_words]
+    text = decontracted(text)  # Expand contractions
+    text = re.sub(r"\S*\d\S*", "", text).strip()  # Remove words containing numbers
+    text = re.sub(r"[^A-Za-z]+", " ", text)  # Keep only alphabets
+    text = text.replace("#", "").replace("_", " ")  # Clean hashtags and underscores
+    tokens = word_tokenize(text)  # Tokenization
+    tokens = [lemmatizer.lemmatize(word.lower()) for word in tokens if word.lower() not in stop_words]  # Remove stopwords and lemmatize
     return " ".join(tokens)
 
+# Function to count emojis in text
 def count_emojis(text):
     import emoji
     return sum(1 for char in text if char in emoji.EMOJI_DATA)
 
+# Extract all required features for prediction
 def extract_features(clean_text, raw):
-    tfidf_input = vectorizer.transform([clean_text])
-    sentiment = TextBlob(clean_text).sentiment.polarity
-    tweet_len = len(clean_text)
-    num_hashtags = raw.count("#")
-    has_mention = int("@" in raw)
-    extra_feat = np.array([[sentiment, tweet_len, num_hashtags, has_mention]])
-    return hstack([tfidf_input, extra_feat])
+    tfidf_input = vectorizer.transform([clean_text])  # TF-IDF features
+    sentiment = TextBlob(clean_text).sentiment.polarity  # Sentiment score
+    tweet_len = len(clean_text)  # Length of cleaned tweet
+    num_hashtags = raw.count("#")  # Number of hashtags in original tweet
+    has_mention = int("@" in raw)  # Presence of mentions
+    extra_feat = np.array([[sentiment, tweet_len, num_hashtags, has_mention]])  # Combine extra features
+    return hstack([tfidf_input, extra_feat])  # Stack TF-IDF and extra features horizontally
 
-# Initialize Streamlit page
+# -------------------- Streamlit App --------------------
+
+# Set page configuration
 st.set_page_config(page_title="Disaster Tweet Detector", layout="centered")
 
-# Initialize session state
+# Initialize session state for input persistence
 if "tweet_input" not in st.session_state:
     st.session_state.tweet_input = ""
 
 # -------------------- UI Layout --------------------
 
-# Header
+# App Header
 st.markdown("""
 <div style='text-align: center; padding: 15px; border: 1px solid #ddd; border-radius: 10px;'>
     <h1>🌪️ Disaster Tweet Detector</h1>
@@ -84,7 +89,7 @@ st.markdown("""
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Try an Example (with buttons inside)
+# Example section with buttons
 st.markdown("""
 <div style='border: 1px solid #ddd; border-radius: 10px; padding: 15px; text-align:center;'>
     <h4>📋 Try an example</h4>
@@ -94,8 +99,7 @@ st.markdown("""
 
 col_ex1, col_ex2, col_ex3 = st.columns([3, 8, 3])
 with col_ex2:
-     # Add a gap above the buttons
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)  # Add spacing above buttons
 
     col_b1, col_b2 = st.columns(2)
     if col_b1.button("✅ Puppy Tweet 🐶"):
@@ -103,42 +107,44 @@ with col_ex2:
     if col_b2.button("🔥 Fire Alert Tweet 🚨"):
         st.session_state.tweet_input = "BREAKING: Uncontrolled forest fires ravaging California, claiming countless animal lives 🔥💔 Urgent action needed! @US_President, we need your help NOW to combat this disaster #SaveCalifornia #StopTheBurn"
 
-
-# Input field
+# Text Input Box
 st.markdown("<div style='text-align:center;'><label style='font-size:16px;font-weight:bold;'>✍️ Enter a tweet to classify:</label></div>", unsafe_allow_html=True)
 tweet_input = st.text_area("", value=st.session_state.tweet_input, height=100, label_visibility="collapsed")
 
-# Buttons
+# Predict / Clear Buttons
 col_left, col_center, col_right = st.columns([1.5, 2, 1.5])
 with col_center:
     col1, col2 = st.columns(2)
     predict_clicked = col1.button("🔍 Predict", use_container_width=True)
     clear_clicked = col2.button("🧹 Reset All", use_container_width=True)
 
+# Clear input if reset button clicked
 if clear_clicked:
-    st.session_state.tweet_input = ""  # Clears session state input
-    tweet_input = ""  # Clears the text area input box immediately
-  
+    st.session_state.tweet_input = ""
+    tweet_input = ""
+
+# Predict logic when Predict button clicked
 if predict_clicked:
     if not tweet_input.strip():
         st.warning("⚠️ Please enter a tweet to analyze.")
     else:
         st.session_state.tweet_input = tweet_input
-        clean_text = preprocess_tweet(tweet_input)
-        features = extract_features(clean_text, tweet_input)
-        prediction_proba = model.predict_proba(features)[0]
-        prediction = int(np.argmax(prediction_proba))
-        confidence = prediction_proba[prediction]
-        sentiment_score = TextBlob(clean_text).sentiment.polarity
-        emoji_count = count_emojis(tweet_input)
+        clean_text = preprocess_tweet(tweet_input)  # Clean input
+        features = extract_features(clean_text, tweet_input)  # Extract features
+        prediction_proba = model.predict_proba(features)[0]  # Predict probabilities
+        prediction = int(np.argmax(prediction_proba))  # Predicted class
+        confidence = prediction_proba[prediction]  # Confidence score
+        sentiment_score = TextBlob(clean_text).sentiment.polarity  # Sentiment
+        emoji_count = count_emojis(tweet_input)  # Emoji count
 
+        # Determine mood based on sentiment score
         mood = "😊 Casual / Friendly Tone" if sentiment_score >= 0.3 else (
                "🔥 Urgent / Alarming Tone" if sentiment_score <= -0.2 else "💬 Matter-of-Fact Tone")
 
         with st.spinner("Analyzing tweet..."):
-            time.sleep(1.5)
+            time.sleep(1.5)  # Simulate processing time
 
-        # Prediction Result
+        # Display Prediction
         st.markdown(f"""
         <div style='text-align:center; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 10px auto; max-width: 600px;'>
             <h2 style='color:#0099ff;'>📢 Prediction Result</h2>
@@ -149,14 +155,14 @@ if predict_clicked:
             <div style='margin-top: 10px; font-style: italic; color: gray;'>{mood}</div>
         </div>
         """, unsafe_allow_html=True)
-       
-        # Side-by-side output boxes
+
+        # Split output into two columns
         col1, col2 = st.columns(2)
 
-        # Celebrate with balloons!
+        # Celebrate on successful prediction
         st.balloons()
 
-        # Confidence Breakdown
+        # Confidence Breakdown Pie Chart
         with col1:
             with st.container():
                 st.markdown("""
@@ -164,15 +170,14 @@ if predict_clicked:
                     <h4 style='text-align:center;'>📈 Confidence Breakdown</h4>
                 """, unsafe_allow_html=True)
 
-                # Resize the pie chart to fit properly
-                fig, ax = plt.subplots(figsize=(2.5, 2))  # Adjusted figure size for better fit
+                fig, ax = plt.subplots(figsize=(2.5, 2))  # Smaller pie chart
                 ax.pie(prediction_proba, labels=["Non-Disaster", "Disaster"], autopct="%1.1f%%", colors=["#8BC34A", "#FF5252"])
-                ax.axis("equal")
+                ax.axis("equal")  # Equal aspect ratio ensures pie is drawn as a circle
                 st.pyplot(fig)
 
                 st.markdown("</div>", unsafe_allow_html=True)
 
-        # Tweet Analysis
+        # Tweet Analysis Summary
         with col2:
             st.markdown("""
             <div style='border: 1px solid #ddd; border-radius: 10px; padding: 20px; width: 100%;'>
@@ -192,7 +197,7 @@ if predict_clicked:
                 </div>
                 """, unsafe_allow_html=True)
 
-        # Save prediction CSV with additional details
+        # Create CSV output
         output_df = pd.DataFrame([{
             "Tweet": tweet_input,
             "Prediction": "Disaster" if prediction == 1 else "Non-Disaster",
@@ -204,13 +209,12 @@ if predict_clicked:
             "Emoji Count": emoji_count
         }])
 
-
-        # Download Button Alignment
-        col_dl1, col_dl2, col_dl3 = st.columns([2, 6, 2])  # Adjust columns to center the button
+        # Download button for CSV
+        col_dl1, col_dl2, col_dl3 = st.columns([2, 6, 2])
         with col_dl2:
             st.download_button("⬇️ Download Prediction as CSV", output_df.to_csv(index=False), file_name="tweet_prediction.csv", use_container_width=True)
 
-
+        # Footer
         st.markdown("""
         <div style='text-align:center; padding-top: 10px;'>
             <span style='font-size:13px; color: gray;'>🤖 Powered by Logistic Regression | TF-IDF + Sentiment + Length + Hashtags + Mentions</span>
