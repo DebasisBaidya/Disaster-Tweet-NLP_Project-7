@@ -102,6 +102,27 @@ The model will predict:
 
 ## 🙋‍♂️ About Me
 
-This was a NLP project I worked on to understand how to handle text data and build something useful out of it. Always open to feedback or improvements.  
-**– Debasis Baidya**
+**Debasis Baidya**  
+Senior MIS | Data Science Intern  
+✅ Automated 80%+ of manual processes at my workplace  
+📊 Skilled in Python, Power BI, SQL, Google Apps Script, ML, DL, NLP  
+<p align="left">
+  📫 <strong>Connect with me:</strong>&nbsp;
+
+  <a href="https://www.linkedin.com/in/debasisbaidya">
+    <img src="https://img.shields.io/badge/LinkedIn-View_Profile-blue?logo=linkedin&logoColor=white" />
+  </a>
+
+  <a href="mailto:speak2debasis@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-Mail_Me-red?logo=gmail&logoColor=white" />
+  </a>
+
+  <a href="https://api.whatsapp.com/send?phone=918013316086&text=Hi%20Debasis!">
+    <img src="https://img.shields.io/badge/WhatsApp-Message-green?logo=whatsapp&logoColor=white" />
+  </a>
+</p>
+
+---
+
+⭐ If you found this project helpful, don’t forget to **star this repo** and stay connected!
 
