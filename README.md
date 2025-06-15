@@ -6,8 +6,8 @@
 
 This project is about classifying tweets to check whether they are related to a real disaster or not using NLP techniques. It covers everything from text cleaning, feature extraction, model building, and finally deployment.
 
-- 🚀 **Live App**: [https://disaster-tweet-nlp-debasis-baidya.streamlit.app](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
-- 📺 **All About My App**: [https://youtu.be/VebH__P0o5s](https://youtu.be/VebH__P0o5s)
+- 🚀 **Live App**: [Streamlit Link](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
+- 📺 **All About My App**: [Demo Video Link](https://youtu.be/VebH__P0o5s)
 
 ---
 
