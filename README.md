@@ -1,8 +1,7 @@
 # 🌍 Disaster Tweet Classification (NLP Project)
 
-[![Streamlit App](https://img.shields.io/badge/Live%20App-Streamlit-brightgreen?logo=streamlit)](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit App](https://img.shields.io/badge/Live%20App-Streamlit-brightgreen?logo=streamlit)](https://disaster-tweet-nlp-debasis-baidya.streamlit.app)
 [![re](https://img.shields.io/badge/re-Regex-blue)](https://docs.python.org/3/library/re.html)
 [![NLTK](https://img.shields.io/badge/NLTK-NLP-blueviolet?logo=python&logoColor=white)](https://www.nltk.org/)
 [![TextBlob](https://img.shields.io/badge/TextBlob-Sentiment-yellowgreen)](https://textblob.readthedocs.io/en/dev/)
@@ -15,6 +14,7 @@
 [![transformers](https://img.shields.io/badge/Transformers-HuggingFace-red?logo=huggingface&logoColor=white)](https://huggingface.co/transformers/)
 [![os](https://img.shields.io/badge/OS_Module-Used-lightgrey)](https://docs.python.org/3/library/os.html)
 [![IPython.display](https://img.shields.io/badge/IPython.display-Jupyter-magenta)](https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 This project is about classifying tweets to check whether they are related to a real disaster or not using NLP techniques. It covers everything from text cleaning, feature extraction, model building, and finally deployment.
 
